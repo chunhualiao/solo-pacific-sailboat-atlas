@@ -1,4 +1,11 @@
-import { Component, useMemo, useState, type ReactNode } from "react";
+import {
+  Component,
+  useMemo,
+  useState,
+  useRef,
+  useLayoutEffect,
+  type ReactNode,
+} from "react";
 import {
   Anchor,
   Search,
@@ -318,6 +325,24 @@ export default function App() {
     [step, setStep] = useState(0),
     [sidebar, setSidebar] = useState(false),
     [inspector, setInspector] = useState(true);
+  const modebarRef = useRef<HTMLElement>(null);
+  const [drawerTop, setDrawerTop] = useState(0);
+  useLayoutEffect(() => {
+    if (!sidebar || !modebarRef.current) return;
+    const bar = modebarRef.current;
+    const measure = () =>
+      setDrawerTop(Math.max(0, bar.getBoundingClientRect().bottom));
+    measure();
+    const observer = new ResizeObserver(measure);
+    observer.observe(bar);
+    window.addEventListener("resize", measure);
+    window.addEventListener("scroll", measure, true);
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("resize", measure);
+      window.removeEventListener("scroll", measure, true);
+    };
+  }, [sidebar, bilingual]);
   const update = (s: Partial<SceneState>) => setState((p) => ({ ...p, ...s }));
   const selected = byId[state.selected];
   const sys = systems.find((s) => s.id === selected.system)!;
@@ -540,7 +565,11 @@ export default function App() {
             <ArrowUpRight size={14} />
           </button>
         </header>
-        <nav className="modebar" aria-label={text("View modes", "视图模式")}>
+        <nav
+          ref={modebarRef}
+          className="modebar"
+          aria-label={text("View modes", "视图模式")}
+        >
           {modes.map(([id, en, zh]) => (
             <button
               key={id}
@@ -560,6 +589,7 @@ export default function App() {
       <div className="workspace">
         <aside
           id="left-panel"
+          style={{ top: drawerTop }}
           className={`sidebar ${sidebar ? "mobile-open" : ""}`}
         >
           <div className="panel-heading">

@@ -194,3 +194,22 @@ for (const width of [390, 800]) {
     );
   });
 }
+
+test("mobile results remain visible when scrolling with the drawer open", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await ready(page);
+  await page.getByLabel("Search components（搜索部件）").fill("battery");
+  await page.evaluate(() => window.scrollTo(0, 650));
+  const result = page.locator('[data-part="battery"]');
+  await expect
+    .poll(async () => (await result.boundingBox())!.y)
+    .toBeGreaterThanOrEqual(0);
+  const box = (await result.boundingBox())!;
+  expect(box.y + box.height).toBeLessThan(844);
+  await result.click();
+  await expect(page.locator(".component-heading h2")).toContainText(
+    "House battery",
+  );
+});
