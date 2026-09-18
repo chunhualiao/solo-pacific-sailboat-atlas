@@ -2,6 +2,13 @@
 
 A bilingual Cal 40 learning application: 120 selectable 3D components, 13 systems, a 124-node / 124-edge knowledge graph, configuration-aware failure propagation, and eleven solo-passage walkthroughs.（双语 Cal 40 学习应用：120 个可选择三维部件、13 个系统、124 节点／124 关系知识图谱、考虑配置的故障传播及 11 个独航情景。）
 
+
+**[Open the live application（打开在线应用）](https://solo-pacific-sailboat-atlas.chunhualiao.workers.dev/)**
+
+[![Live sailboat atlas with interactive 3D model, system hierarchy and bilingual component inspector（在线帆船图谱：交互式三维模型、系统层级与双语部件详情）](docs/screenshots/live-application.png)](https://solo-pacific-sailboat-atlas.chunhualiao.workers.dev/)
+
+*Screenshot of the deployed application. Click the image to explore the boat, its knowledge graph and failure scenarios.（在线应用截图；点击图片探索帆船、知识图谱与故障情景。）*
+
 ## Build a similar 3D atlas（构建类似三维图谱）
 
 Read the [complete project prompt history](prompts/README.md): the original build brief, engineering audit requirements, knowledge-graph examples, bilingual UI instruction, Git milestones, and release/deployment follow-ups. The prompts are shared for reuse and adaptation; documented implementation limits still apply.（查看完整项目提示词历史：原始需求、工程审计、知识图谱示例、双语界面、Git 里程碑及发布／部署补充。可复用与改编，但仍需参考已记录的实现限制。）
