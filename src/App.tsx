@@ -1,4 +1,11 @@
-import { Component, useMemo, useState, type ReactNode } from "react";
+import {
+  Component,
+  useMemo,
+  useState,
+  useRef,
+  useLayoutEffect,
+  type ReactNode,
+} from "react";
 import {
   Anchor,
   Search,
@@ -25,7 +32,7 @@ import {
 import { Scene, type SceneState } from "./Scene";
 import {
   b,
-  t,
+  t as bilingualText,
   parts,
   byId,
   systems,
@@ -37,7 +44,7 @@ import {
   type Bi,
 } from "./data";
 import { evaluate, sailing, type Status } from "./domain";
-const text = (en: string, zh: string) => t(b(en, zh));
+import { useLanguage } from "./Language";
 const initial: SceneState = {
   selected: "mainsail",
   hidden: [],
@@ -88,27 +95,34 @@ class Boundary extends Component<{ children: ReactNode }, { error: boolean }> {
     return { error: true };
   }
   render() {
-    return this.state.error ? (
-      <div className="scene-error">
-        <AlertTriangle />
-        <h2>{text("3D view could not load", "三维视图无法加载")}</h2>
-        <p>
-          {text(
-            "Reload the page or use the component catalog. WebGL must be available.",
-            "请刷新页面或使用部件目录；三维视图需要 WebGL。",
-          )}
-        </p>
-      </div>
-    ) : (
-      this.props.children
-    );
+    return this.state.error ? <SceneError /> : this.props.children;
   }
 }
+function SceneError() {
+  const { text } = useLanguage();
+  return (
+    <div className="scene-error">
+      <AlertTriangle />
+      <h2>{text("3D view could not load", "三维视图无法加载")}</h2>
+      <p>
+        {text(
+          "Reload the page or use the component catalog. WebGL must be available.",
+          "请刷新页面或使用部件目录；三维视图需要 WebGL。",
+        )}
+      </p>
+    </div>
+  );
+}
 function Label({ value }: { value: Bi }) {
+  const { bilingual } = useLanguage();
   return (
     <>
       {value.en}
-      <span className="zh">（{value.zh}）</span>
+      {bilingual && (
+        <span className="zh" lang="zh-CN">
+          （{value.zh}）
+        </span>
+      )}
     </>
   );
 }
@@ -129,6 +143,7 @@ function Range({
   onChange: (v: number) => void;
   suffix?: string;
 }) {
+  const { t } = useLanguage();
   return (
     <label className="range">
       <span>
@@ -163,6 +178,7 @@ function KnowledgeGraph({
   depth: number;
   statuses: Record<string, Status>;
 }) {
+  const { text } = useLanguage();
   const direct = edges.filter((e) => e.from === selected || e.to === selected);
   const ids = new Set([selected, ...direct.flatMap((e) => [e.from, e.to])]);
   if (depth === 2) {
@@ -289,6 +305,12 @@ function KnowledgeGraph({
   );
 }
 export default function App() {
+  const { t, text, bilingual, setBilingual } = useLanguage();
+  const [collapsed, setCollapsed] = useState({
+    left: false,
+    top: false,
+    bottom: false,
+  });
   const [state, setState] = useState<SceneState>(initial),
     [query, setQuery] = useState(""),
     [expanded, setExpanded] = useState<string[]>(["rig", "sails"]),
@@ -303,6 +325,24 @@ export default function App() {
     [step, setStep] = useState(0),
     [sidebar, setSidebar] = useState(false),
     [inspector, setInspector] = useState(true);
+  const modebarRef = useRef<HTMLElement>(null);
+  const [drawerTop, setDrawerTop] = useState(0);
+  useLayoutEffect(() => {
+    if (!sidebar || !modebarRef.current) return;
+    const bar = modebarRef.current;
+    const measure = () =>
+      setDrawerTop(Math.max(0, bar.getBoundingClientRect().bottom));
+    measure();
+    const observer = new ResizeObserver(measure);
+    observer.observe(bar);
+    window.addEventListener("resize", measure);
+    window.addEventListener("scroll", measure, true);
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("resize", measure);
+      window.removeEventListener("scroll", measure, true);
+    };
+  }, [sidebar, bilingual]);
   const update = (s: Partial<SceneState>) => setState((p) => ({ ...p, ...s }));
   const selected = byId[state.selected];
   const sys = systems.find((s) => s.id === selected.system)!;
@@ -340,7 +380,7 @@ export default function App() {
         ? { headsail: id }
         : {}),
     });
-    setInspector(true);
+    if (window.matchMedia("(max-width: 900px)").matches) setInspector(true);
     setEdgeIndex(null);
   }
   function mode(id: string) {
@@ -409,73 +449,149 @@ export default function App() {
     });
   }
   const filtered = parts.filter((p) =>
-    `${p.id} ${t(p.name)} ${t(p.description)}`
+    `${p.id} ${bilingualText(p.name)} ${bilingualText(p.description)}`
       .toLowerCase()
       .includes(query.toLowerCase()),
   );
   const currentStatus = statuses[state.selected];
   return (
-    <div className="atlas-app">
-      <header className="topbar">
-        <button
-          className="brand"
-          onClick={() => mode("assembled")}
-          aria-label={text("Home", "首页")}
-        >
-          <span className="brand-icon">
-            <Anchor size={23} />
-          </span>
-          <span>
-            <strong>
-              SOLO PACIFIC<span className="brand-cn">独航太平洋</span>
-            </strong>
-            <small>{text("SAILBOAT ATLAS", "帆船知识图谱")}</small>
-          </span>
-        </button>
-        <div className="searchbox">
-          <Search size={17} />
+    <div
+      className={`atlas-app ${collapsed.left ? "left-collapsed" : ""} ${collapsed.top ? "top-collapsed" : ""} ${collapsed.bottom ? "bottom-collapsed" : ""}`}
+    >
+      <div
+        className="display-controls"
+        role="group"
+        aria-label={text("Display controls", "显示控制")}
+      >
+        <label className="language-switch">
           <input
-            value={query}
-            onChange={(e) => {
-              setQuery(e.target.value);
-              setSidebar(true);
-            }}
-            placeholder={text("Find a component or system", "搜索部件或系统")}
-            aria-label={text("Search components", "搜索部件")}
+            type="checkbox"
+            role="switch"
+            checked={bilingual}
+            onChange={(e) => setBilingual(e.target.checked)}
           />
-          {query && (
-            <button
-              onClick={() => setQuery("")}
-              aria-label={text("Clear search", "清空搜索")}
-            >
-              <X size={14} />
-            </button>
-          )}
+          {text("Bilingual text", "双语文字")}
+        </label>
+        <div
+          className="panel-toggles"
+          role="group"
+          aria-label={text("Panel visibility", "面板可见性")}
+        >
+          {(
+            [
+              ["left", "Left", "左侧"],
+              ["right", "Right", "右侧"],
+              ["top", "Top", "顶部"],
+              ["bottom", "Bottom", "底部"],
+            ] as const
+          ).map(([side, en, zh]) => {
+            const open = side === "right" ? inspector : !collapsed[side];
+            const label = text(
+              `${open ? "Collapse" : "Expand"} ${side} panel`,
+              `${open ? "收起" : "展开"}${zh}面板`,
+            );
+            return (
+              <button
+                key={side}
+                aria-label={label}
+                title={label}
+                aria-expanded={open}
+                aria-controls={`${side}-panel`}
+                onClick={() =>
+                  side === "right"
+                    ? setInspector(!inspector)
+                    : setCollapsed((current) => ({
+                        ...current,
+                        [side]: !current[side],
+                      }))
+                }
+              >
+                {open ? <EyeOff size={14} /> : <Eye size={14} />}
+                <Label value={b(en, zh)} />
+              </button>
+            );
+          })}
         </div>
-        <button className="source-button" onClick={() => setShowSources(true)}>
-          <BookOpen size={16} />
-          {text("Sources & accuracy", "来源与精度")}
-          <ArrowUpRight size={14} />
-        </button>
-      </header>
-      <nav className="modebar" aria-label={text("View modes", "视图模式")}>
-        {modes.map(([id, en, zh]) => (
+      </div>
+      <div id="top-panel" className="top-panels">
+        <header className="topbar">
           <button
-            key={id}
-            className={state.mode === id ? "active" : ""}
-            onClick={() => mode(id)}
+            className="brand"
+            onClick={() => mode("assembled")}
+            aria-label={text("Home", "首页")}
           >
-            {id === "solo" ? (
-              <Compass size={15} />
-            ) : id === "sailing" ? (
-              <Wind size={15} />
-            ) : null}
-            <Label value={b(en, zh)} />
+            <span className="brand-icon">
+              <Anchor size={23} />
+            </span>
+            <span>
+              <strong>
+                SOLO PACIFIC
+                {bilingual && (
+                  <span className="brand-cn" lang="zh-CN">
+                    独航太平洋
+                  </span>
+                )}
+              </strong>
+              <small>{text("SAILBOAT ATLAS", "帆船知识图谱")}</small>
+            </span>
           </button>
-        ))}
-      </nav>
+          <div className="searchbox">
+            <Search size={17} />
+            <input
+              value={query}
+              onChange={(e) => {
+                setQuery(e.target.value);
+                setSidebar(true);
+                setCollapsed((current) => ({ ...current, left: false }));
+              }}
+              placeholder={text("Find a component or system", "搜索部件或系统")}
+              aria-label={text("Search components", "搜索部件")}
+            />
+            {query && (
+              <button
+                onClick={() => setQuery("")}
+                aria-label={text("Clear search", "清空搜索")}
+              >
+                <X size={14} />
+              </button>
+            )}
+          </div>
+          <button
+            className="source-button"
+            onClick={() => setShowSources(true)}
+          >
+            <BookOpen size={16} />
+            {text("Sources & accuracy", "来源与精度")}
+            <ArrowUpRight size={14} />
+          </button>
+        </header>
+        <nav
+          ref={modebarRef}
+          className="modebar"
+          aria-label={text("View modes", "视图模式")}
+        >
+          {modes.map(([id, en, zh]) => (
+            <button
+              key={id}
+              className={state.mode === id ? "active" : ""}
+              onClick={() => mode(id)}
+            >
+              {id === "solo" ? (
+                <Compass size={15} />
+              ) : id === "sailing" ? (
+                <Wind size={15} />
+              ) : null}
+              <Label value={b(en, zh)} />
+            </button>
+          ))}
+        </nav>
+      </div>
       <div className="workspace">
-        <aside className={`sidebar ${sidebar ? "mobile-open" : ""}`}>
+        <aside
+          id="left-panel"
+          style={{ top: drawerTop }}
+          className={`sidebar ${sidebar ? "mobile-open" : ""}`}
+        >
           <div className="panel-heading">
             <span className="eyebrow">01 / {text("EXPLORE", "探索")}</span>
             <button
@@ -796,7 +912,7 @@ export default function App() {
           )}
         </main>
         {inspector && (
-          <aside className="inspector">
+          <aside id="right-panel" className="inspector">
             <div className="inspector-tabs">
               <button
                 className={tab === "component" ? "active" : ""}
@@ -1301,7 +1417,7 @@ export default function App() {
           </aside>
         )}
       </div>
-      <footer className="explode-bar">
+      <footer id="bottom-panel" className="explode-bar">
         <div className="explode-title">
           <Layers3 size={18} />
           <span>
@@ -1453,8 +1569,8 @@ export default function App() {
             ))}
             <p className="small muted">
               {text(
-                "References inspected 17 September 2026. English and Simplified Chinese are displayed together throughout the atlas.",
-                "参考资料查阅日期：2026 年 9 月 17 日。图谱全程并列显示英文和简体中文。",
+                "References inspected 17 September 2026. Use the bilingual text switch to show or hide Simplified Chinese alongside English.",
+                "参考资料查阅日期：2026 年 9 月 17 日。使用双语文字开关，可显示或隐藏英文旁的简体中文。",
               )}
             </p>
           </section>

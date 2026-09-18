@@ -9,6 +9,12 @@ A bilingual Cal 40 learning application: 120 selectable 3D components, 13 system
 
 *Screenshot of the deployed application. Click the image to explore the boat, its knowledge graph and failure scenarios.（在线应用截图；点击图片探索帆船、知识图谱与故障情景。）*
 
+## Display controls（显示控制）
+
+Use **Bilingual text** in the top control strip to switch between English with Simplified Chinese (the default) and English only. Your language choice is saved in this browser when local storage is available.（使用顶部控制条的“双语文字”开关，在默认的英中双语和仅英文之间切换；浏览器支持本地存储时会记住选择。）
+
+On desktop, the **Left**, **Right**, **Top**, and **Bottom** buttons independently collapse or restore the hierarchy, inspector, header/view modes, and explode controls. The compact control strip stays visible, and the canvas grows into the freed space without resetting your model settings. Mobile retains its existing systems drawer and inspector layout.（桌面端的左侧、右侧、顶部、底部按钮，可分别收起或恢复层级列表、部件详情、页首与视图模式、拆解控制。精简控制条始终可见，画布扩展后保留模型设置；移动端保留系统抽屉与详情布局。）
+
 ## Build a similar 3D atlas（构建类似三维图谱）
 
 Read the [complete project prompt history](prompts/README.md): the original build brief, engineering audit requirements, knowledge-graph examples, bilingual UI instruction, Git milestones, and release/deployment follow-ups. The prompts are shared for reuse and adaptation; documented implementation limits still apply.（查看完整项目提示词历史：原始需求、工程审计、知识图谱示例、双语界面、Git 里程碑及发布／部署补充。可复用与改编，但仍需参考已记录的实现限制。）

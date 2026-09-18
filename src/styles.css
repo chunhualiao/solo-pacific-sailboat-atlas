@@ -1096,9 +1096,8 @@ h3 {
   }
   .sidebar.mobile-open {
     display: flex;
-    position: absolute;
+    position: fixed;
     left: 0;
-    top: 120px;
     bottom: 80px;
     z-index: 12;
     width: 275px;
@@ -1360,8 +1359,6 @@ h3 {
     padding: 2px;
   }
   .sidebar.mobile-open {
-    position: fixed;
-    top: 147px;
     bottom: 108px;
     z-index: 15;
     width: min(320px, 88vw);
@@ -1469,5 +1466,55 @@ h3 {
   }
   .scene-surface {
     inset: 142px 0 38px;
+  }
+}
+
+/* Display preferences remain available even when every desktop panel is closed. */
+.display-controls {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 38px;
+  padding: 4px 18px;
+  background: #edf1e9;
+  border-bottom: 1px solid var(--line);
+  font-size: 11px;
+}
+.language-switch {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  cursor: pointer;
+}
+.panel-toggles {
+  display: flex;
+  gap: 8px;
+}
+.panel-toggles button {
+  border-radius: 4px;
+  padding: 5px 9px;
+}
+.panel-toggles button[aria-expanded="false"] {
+  background: #dce5d6;
+}
+.top-panels {
+  display: contents;
+}
+@media (min-width: 901px) {
+  .left-collapsed .sidebar,
+  .top-collapsed .topbar,
+  .top-collapsed .modebar,
+  .bottom-collapsed .explode-bar {
+    display: none;
+  }
+}
+@media (max-width: 900px) {
+  .panel-toggles {
+    display: none;
+  }
+  .language-switch {
+    min-height: 36px;
   }
 }
