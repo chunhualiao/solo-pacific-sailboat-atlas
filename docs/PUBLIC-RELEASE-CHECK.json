@@ -1,0 +1,20 @@
+{
+  "checked_at_local": "2026-09-17T22:13:02.935060-07:00",
+  "history_commits": 1,
+  "unique_blobs": 84,
+  "pattern_scan_findings": [],
+  "png_metadata_files": [],
+  "remote_configured": false,
+  "default_branch": "main",
+  "limitations": "Pattern scan is not proof of absence of every possible secret. Third-party license identities intentionally retained. Model rights hold remains.",
+  "fresh_install_validation": {
+    "npm_ci": "passed",
+    "format": "passed",
+    "lint": "passed",
+    "unit_tests": 17,
+    "production_subpath_tests": 1,
+    "build": "passed within production subpath test"
+  },
+  "private_network_findings": [],
+  "allowed_network_literal": "100.64.0.0/10 is a standard address-range matcher in the sanitization script, not a private host address."
+}

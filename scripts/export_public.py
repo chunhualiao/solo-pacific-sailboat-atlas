@@ -31,7 +31,7 @@ def scrub(text):
             ip = ipaddress.ip_address(match.group())
             if ip.is_loopback or ip.is_unspecified:
                 return match.group()
-            if ip.is_private or ip in ipaddress.ip_network("<PRIVATE_IP>/10"):
+            if ip.is_private or ip in ipaddress.ip_network("100.64.0.0/10"):
                 return "<PRIVATE_IP>"
         except ValueError:
             pass
@@ -62,7 +62,7 @@ with zipfile.ZipFile(io.BytesIO(archive)) as bundle:
 readme = destination / "README.md"
 text = readme.read_text()
 text = text.replace("Use the IPv4 address: another local application may occupy IPv6 localhost.（打开此 IPv4 地址；本机其他应用可能占用 IPv6 localhost。）", "（在浏览器打开此地址。）")
-text = text.split("Changes are preserved on `issue/1-sailboat-atlas`")[0]
+text = re.sub(r"^Changes are preserved on `issue/1-sailboat-atlas`[^\n]*\n?", "", text, flags=re.MULTILINE)
 text += "\n## Release status（发布状态）\n\nThis is a sanitized educational prototype snapshot. Application code is MIT; model-related rights remain unresolved under ASSET-RIGHTS.md. This local repository has not been published. CI configuration is included, but hosted checks and branch protection are not yet verified.（这是脱敏的教学原型快照；应用代码采用 MIT，模型相关权利仍待确认。此本地仓库尚未发布，CI 与分支保护未在托管平台验证。）\n"
 readme.write_text(text)
 record = {

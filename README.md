@@ -59,3 +59,9 @@ Read [engineering audit](docs/ENGINEERING-AUDIT.md), [machine-readable component
 ## Release status（发布状态）
 
 This is a sanitized educational prototype snapshot. Application code is MIT; model-related rights remain unresolved under ASSET-RIGHTS.md. This local repository has not been published. CI configuration is included, but hosted checks and branch protection are not yet verified.（这是脱敏的教学原型快照；应用代码采用 MIT，模型相关权利仍待确认。此本地仓库尚未发布，CI 与分支保护未在托管平台验证。）
+
+## Licensing and deployment（许可与部署）
+
+Original application software is MIT: see [LICENSE](LICENSE). Model-related files are excluded pending rights clarification: see [ASSET-RIGHTS.md](ASSET-RIGHTS.md). Dependency and font notices are in [THIRD-PARTY-NOTICES.md](THIRD-PARTY-NOTICES.md).（应用软件采用 MIT；模型相关文件在权利确认前排除在外，依赖与字体声明另列。）
+
+For project-path hosting, build with `npm run build -- --base=/repository-name/`. Verify with `npm run test:release`.（项目子路径托管请指定基础路径并运行发布测试。）
