@@ -1,0 +1,17 @@
+
+> solo-pacific-atlas@1.0.0 lint
+> eslint .
+
+
+<LOCAL_PATH>
+  35:2  error  Definition for rule 'react-hooks/exhaustive-deps' was not found  react-hooks/exhaustive-deps
+
+<LOCAL_PATH>
+  36:283  error  Expected an assignment or function call and instead saw an expression  @typescript-eslint/no-unused-expressions
+
+<LOCAL_PATH>
+  6:6  error  'd' is never reassigned. Use 'const' instead  prefer-const
+
+✖ 3 problems (3 errors, 0 warnings)
+  1 error and 0 warnings potentially fixable with the `--fix` option.
+

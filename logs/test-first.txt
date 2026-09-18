@@ -1,0 +1,28 @@
+
+> solo-pacific-atlas@1.0.0 test
+> vitest run
+
+
+ RUN  v5.0.1 <LOCAL_PATH>
+
+ ❯ tests/domain.test.ts (0 test)
+
+⎯⎯⎯⎯⎯⎯ Failed Suites 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/domain.test.ts [ tests/domain.test.ts ]
+Error: Cannot find module '../src/data' imported from <LOCAL_PATH>
+ ❯ tests/domain.test.ts:2:1
+      1| import {describe,it,expect} from 'vitest';
+      2| import {parts,edges,systems,scenarios} from '../src/data';
+       | ^
+      3| import {evaluate, sailing, explodedPosition} from '../src/domain';
+      4| describe('auditable domain model',()=>{
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  no tests
+   Start at  21:14:36
+   Duration  109ms (worker 96%, environment 4%)
+

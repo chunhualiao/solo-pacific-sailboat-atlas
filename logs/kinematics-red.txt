@@ -1,0 +1,24 @@
+
+> solo-pacific-atlas@1.0.0 test
+> vitest run
+
+
+ RUN  v5.0.1 <LOCAL_PATH>
+
+ ❯ tests/kinematics.test.ts (0 test)
+
+⎯⎯⎯⎯⎯⎯ Failed Suites 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/kinematics.test.ts [ tests/kinematics.test.ts ]
+Error: Cannot find module '../src/kinematics' imported from <LOCAL_PATH>
+ ❯ tests/kinematics.test.ts:3:1
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 1 passed (2)
+      Tests  7 passed (7)
+   Start at  21:38:18
+   Duration  148ms (transform 65%, import 15%, tests 12%, worker 9%)
+

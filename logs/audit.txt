@@ -1,0 +1,5 @@
+
+> solo-pacific-atlas@1.0.0 audit
+> tsx scripts/audit.ts
+
+2026-09-17 21:54:47 audit coverage: 124 model: e2b78adca0789b413202d9048f5413bf47c9a784876cad0c25a93cc2148accbe

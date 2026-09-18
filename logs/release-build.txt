@@ -1,0 +1,22 @@
+Recorded 2026-09-17T22:12:17.859575-07:00
+
+> solo-pacific-atlas@1.0.0 build
+> tsc -b && vite build
+
+vite v8.3.0 building client environment for production...
+transforming...
+✓ 2436 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                                               0.55 kB │ gzip:   0.41 kB
+dist/assets/dm-sans-latin-ext-wght-normal-BOFOeGcA.woff2     18.22 kB
+dist/assets/dm-sans-latin-wght-normal-Xz1IZZA0.woff2         36.93 kB
+dist/assets/index-PTsTU_5U.css                               19.68 kB │ gzip:   5.29 kB
+dist/assets/index-8YQ-jpEk.js                             1,315.46 kB │ gzip: 373.75 kB
+
+[plugin builtin:vite-reporter] 
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rolldownOptions.output.codeSplitting to improve chunking: https://rolldown.rs/reference/OutputOptions.codeSplitting
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+✓ built in 359ms

@@ -1,0 +1,26 @@
+
+> solo-pacific-atlas@1.0.0 test
+> vitest run
+
+
+ RUN  v5.0.1 <LOCAL_PATH>
+
+ ❯ tests/geometry.test.ts (5 tests | 1 failed) 571ms
+   ❯ geometry audit (5)
+     × has a 9.24 m design waterline on the centerline 2ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/geometry.test.ts > geometry audit > has a 9.24 m design waterline on the centerline
+AssertionError: expected 8.478021978021978 to be close to 9.24, received difference is 0.7619780219780221, but expected 0.005
+ ❯ tests/geometry.test.ts:9:318
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 2 passed (3)
+      Tests  1 failed | 14 passed (15)
+   Start at  21:43:04
+   Duration  789ms (tests 72%, import 15%, transform 12%, worker 1%)
+

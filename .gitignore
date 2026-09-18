@@ -1,0 +1,17 @@
+.worktree/
+node_modules/
+dist/
+research/
+playwright-report/
+test-results/
+.DS_Store
+
+*.tsbuildinfo
+
+dist-release-check/
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+.public-release/

@@ -1,0 +1,28 @@
+{
+  "created_local": "2026-09-17T22:12:18.748051-07:00",
+  "strategy": "New main root commit; original private history preserved outside this repository",
+  "excluded_files": [
+    "DESIGN.md",
+    "RESEARCH-LOG.md",
+    "docs/MILESTONES.md",
+    "issues/1.md",
+    "issues/original-request.txt",
+    "logs/dev-server.txt"
+  ],
+  "sanitized_text_files": [
+    "logs/audit-tests.txt",
+    "logs/domain-test.txt",
+    "logs/geometry-green.txt",
+    "logs/geometry-red.txt",
+    "logs/kinematics-green.txt",
+    "logs/kinematics-red.txt",
+    "logs/lint-first.txt",
+    "logs/release-subpath-red.txt",
+    "logs/release-unit.txt",
+    "logs/test-first.txt",
+    "logs/tests-final.txt",
+    "scripts/export_public.py"
+  ],
+  "publication": "not performed",
+  "asset_rights": "unresolved; see ASSET-RIGHTS.md"
+}

@@ -1,0 +1,25 @@
+
+> solo-pacific-atlas@1.0.0 format
+> prettier --write src scripts tests *.ts *.json *.js
+
+src/App.tsx 127ms
+src/data.ts 27ms (unchanged)
+src/domain.ts 13ms (unchanged)
+src/geometry.ts 42ms (unchanged)
+src/kinematics.ts 6ms (unchanged)
+src/main.tsx 1ms (unchanged)
+src/manifest.json 20ms (unchanged)
+src/Scene.tsx 27ms
+src/styles.css 70ms
+scripts/audit.ts 7ms (unchanged)
+scripts/generate.ts 4ms (unchanged)
+tests/browser/atlas.spec.ts 15ms
+tests/domain.test.ts 6ms (unchanged)
+tests/geometry.test.ts 5ms (unchanged)
+tests/kinematics.test.ts 2ms (unchanged)
+playwright.config.ts 1ms (unchanged)
+vite.config.ts 1ms (unchanged)
+package-lock.json 9ms (unchanged)
+package.json 0ms (unchanged)
+tsconfig.json 0ms (unchanged)
+eslint.config.js 3ms (unchanged)

@@ -1,0 +1,41 @@
+Recorded 2026-09-17T22:12:17.859575-07:00
+[WebServer] (node:14956) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] [plugin builtin:vite-reporter] 
+[WebServer] (!) Some chunks are larger than 500 kB after minification. Consider:
+[WebServer] - Using dynamic import() to code-split the application
+[WebServer] - Use build.rolldownOptions.output.codeSplitting to improve chunking: https://rolldown.rs/reference/OutputOptions.codeSplitting
+[WebServer] - Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+[WebServer] (node:14992) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+(node:14994) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  1 tests/release/subpath.spec.ts:2:1 › production build loads model and audit links beneath a project path (4.3s)
+
+
+  1) tests/release/subpath.spec.ts:2:1 › production build loads model and audit links beneath a project path 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 120
+    Received: 0
+
+    Call Log:
+    - Timeout 5000ms exceeded while waiting on the predicate
+
+      4 |   page.on("response", response => { if (response.status() >= 400) failures.push(response.url()); });
+      5 |   await page.goto("./");
+    > 6 |   await expect.poll(() => page.evaluate(() => Object.keys((window as unknown as {atlasDiagnostics?: {components: object}}).atlasDiagnostics?.components || {}).length)).toBe(120);
+        |                                                                                                                                                                         ^
+      7 |   await page.getByRole("button", {name:"Sources & accuracy（来源与精度）",exact:true}).click();
+      8 |   for (const name of ["Read the engineering audit（阅读工程审计报告）", "Component audit ledger（逐部件审计台账）"]) {
+      9 |     const href = await page.getByRole("link", {name,exact:true}).getAttribute("href");
+        at <LOCAL_PATH>:6:169
+
+    Error Context: test-results/subpath-production-build-l-8315f-inks-beneath-a-project-path/error-context.md
+
+  1 failed
+    tests/release/subpath.spec.ts:2:1 › production build loads model and audit links beneath a project path 

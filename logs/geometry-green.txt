@@ -1,0 +1,13 @@
+
+> solo-pacific-atlas@1.0.0 test
+> vitest run
+
+
+ RUN  v5.0.1 <LOCAL_PATH>
+
+
+ Test Files  3 passed (3)
+      Tests  15 passed (15)
+   Start at  21:43:59
+   Duration  742ms (tests 70%, import 16%, transform 14%, worker 1%)
+

@@ -1,0 +1,5 @@
+
+> solo-pacific-atlas@1.0.0 geometry
+> tsx scripts/generate.ts
+
+9/17/2026, 9:51:39 PM 120 components, GLB bytes: 2522176

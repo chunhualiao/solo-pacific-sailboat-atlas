@@ -1,0 +1,26 @@
+
+> solo-pacific-atlas@1.0.0 test:e2e
+> playwright test
+
+[WebServer] (node:13163) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 6 tests using 1 worker
+
+(node:13174) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] 9:59:31 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+  ✓  1 tests/browser/atlas.spec.ts:25:1 › GLB selection, visibility, isolation, and exact reassembly (4.4s)
+[WebServer] 9:59:35 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+  ✓  2 tests/browser/atlas.spec.ts:78:1 › knowledge graph and conditional failure consequences (3.4s)
+[WebServer] 9:59:39 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+  ✓  3 tests/browser/atlas.spec.ts:106:1 › cutaway, cameras, sailing controls, and every scenario (12.5s)
+[WebServer] 9:59:51 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+  ✓  4 tests/browser/atlas.spec.ts:154:1 › mobile bilingual layout and source panel (3.0s)
+[WebServer] 9:59:54 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+Measured rendering budget {"calls":169,"triangles":55168}
+  ✓  5 tests/browser/atlas.spec.ts:184:1 › real canvas picking, orbit, pan, zoom and rendering budget (5.5s)
+[WebServer] 10:00:00 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+  ✓  6 tests/browser/atlas.spec.ts:240:1 › graphics interruption retains catalog and actionable bilingual recovery (2.4s)
+
+  6 passed (32.1s)
