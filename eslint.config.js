@@ -5,6 +5,7 @@ export default ts.config(
   {
     ignores: [
       "dist/**",
+      ".wrangler/**",
       "dist-release-check/**",
       "node_modules/**",
       "playwright-report/**",

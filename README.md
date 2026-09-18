@@ -58,10 +58,23 @@ Read [engineering audit](docs/ENGINEERING-AUDIT.md), [machine-readable component
 
 ## Release status（发布状态）
 
-This is a sanitized educational prototype snapshot. Application code is MIT; model-related rights remain unresolved under ASSET-RIGHTS.md. This local repository has not been published. CI configuration is included, but hosted checks and branch protection are not yet verified.（这是脱敏的教学原型快照；应用代码采用 MIT，模型相关权利仍待确认。此本地仓库尚未发布，CI 与分支保护未在托管平台验证。）
+This is a sanitized educational prototype snapshot. Application code is MIT; model-related rights remain unresolved under ASSET-RIGHTS.md. The source is published on GitHub; deployment uses Cloudflare Workers Static Assets.（这是脱敏的教学原型快照；应用代码采用 MIT，模型相关权利仍待确认。源码发布于 GitHub，部署使用 Cloudflare Workers 静态资产托管。）
 
 ## Licensing and deployment（许可与部署）
 
 Original application software is MIT: see [LICENSE](LICENSE). Model-related files are excluded pending rights clarification: see [ASSET-RIGHTS.md](ASSET-RIGHTS.md). Dependency and font notices are in [THIRD-PARTY-NOTICES.md](THIRD-PARTY-NOTICES.md).（应用软件采用 MIT；模型相关文件在权利确认前排除在外，依赖与字体声明另列。）
 
 For project-path hosting, build with `npm run build -- --base=/repository-name/`. Verify with `npm run test:release`.（项目子路径托管请指定基础路径并运行发布测试。）
+
+## Cloudflare deployment（Cloudflare 部署）
+
+Build output only is uploaded; no backend, database or paid storage is required.（只上传构建产物，不需要后端、数据库或付费存储。）
+
+```sh
+npm ci
+npm run deploy:check
+npx wrangler login
+npm run deploy
+```
+
+Authenticate locally; never commit tokens or account credentials. `wrangler.jsonc` uses the account's workers.dev subdomain.（在本机认证，不提交令牌或账户凭据；配置使用账户的 workers.dev 子域。）

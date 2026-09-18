@@ -15,3 +15,7 @@ dist-release-check/
 *.pem
 *.key
 .public-release/
+
+.wrangler/
+.dev.vars
+.dev.vars.*
