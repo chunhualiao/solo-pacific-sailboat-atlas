@@ -25,6 +25,9 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     }
   });
   useEffect(() => {
+    document.title = bilingual
+      ? "Solo Pacific Sailboat Atlas（独航太平洋帆船图谱）"
+      : "Solo Pacific Sailboat Atlas";
     try {
       localStorage.setItem(storageKey, String(bilingual));
     } catch {

@@ -6,6 +6,7 @@ async function ready(page: Page) {
   await expect(page.locator(".model-label")).toHaveCount(0);
 }
 async function englishOnly(page: Page) {
+  await expect(page).toHaveTitle("Solo Pacific Sailboat Atlas");
   expect(await page.locator("body").innerText()).not.toMatch(/[\u3400-\u9fff]/);
   const labels = await page
     .locator("[aria-label], [title], [placeholder], option")
@@ -171,3 +172,25 @@ test("English-only follows every view and graphics recovery", async ({
   await page.locator("canvas").dispatchEvent("webglcontextrestored");
   await expect(page.getByRole("alert")).toHaveCount(0);
 });
+
+for (const width of [390, 800]) {
+  test(`systems drawer stays below the mode bar at ${width}px`, async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width, height: 844 });
+    await ready(page);
+    for (const bilingual of [true, false]) {
+      if (!bilingual)
+        await page.getByRole("switch", { name: /Bilingual text/ }).click();
+      await page.getByRole("button", { name: /^Systems/ }).click();
+      const modes = (await page.locator(".modebar").boundingBox())!;
+      const drawer = (await page.locator(".sidebar").boundingBox())!;
+      expect(drawer.y).toBeGreaterThanOrEqual(modes.y + modes.height - 1);
+      await page.getByRole("button", { name: /^Close hierarchy/ }).click();
+    }
+    await page.getByRole("switch", { name: /Bilingual text/ }).click();
+    await expect(page).toHaveTitle(
+      "Solo Pacific Sailboat Atlas（独航太平洋帆船图谱）",
+    );
+  });
+}

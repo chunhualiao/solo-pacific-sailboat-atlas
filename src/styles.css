@@ -197,6 +197,7 @@ h3 {
   color: #305c50;
 }
 .workspace {
+  position: relative;
   flex: 1;
   display: flex;
   min-height: 0;
@@ -1098,8 +1099,8 @@ h3 {
     display: flex;
     position: absolute;
     left: 0;
-    top: 120px;
-    bottom: 80px;
+    top: 0;
+    bottom: 0;
     z-index: 12;
     width: 275px;
     box-shadow: 10px 0 35px #29443222;
@@ -1360,10 +1361,11 @@ h3 {
     padding: 2px;
   }
   .sidebar.mobile-open {
-    position: fixed;
-    top: 147px;
-    bottom: 108px;
-    z-index: 15;
+    position: absolute;
+    top: 0;
+    bottom: auto;
+    height: min(70dvh, 600px);
+    z-index: 12;
     width: min(320px, 88vw);
     overflow: auto;
   }
