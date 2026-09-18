@@ -7,7 +7,8 @@ import {
 } from "@react-three/fiber";
 import { OrbitControls, useGLTF, Html, Grid, Line } from "@react-three/drei";
 import * as T from "three";
-import { byId, parts, systems, edges, t, b } from "./data";
+import { byId, parts, systems, edges, b } from "./data";
+import { useLanguage } from "./Language";
 import { explodedPosition, sailing } from "./domain";
 import { rigPaths, headTransform, rudderTransform } from "./kinematics";
 import rawManifest from "./manifest.json";
@@ -49,6 +50,7 @@ function Boat({
   state: SceneState;
   onSelect: (id: string) => void;
 }) {
+  const { t } = useLanguage();
   const { scene } = useGLTF(`${import.meta.env.BASE_URL}models/cal40.glb`);
   const root = useRef<T.Group>(null);
   const clone = useMemo(() => {
@@ -436,6 +438,7 @@ function Boat({
   );
 }
 function ExplodedGuides({ state }: { state: SceneState }) {
+  const { t } = useLanguage();
   if (state.explode < 0.05) return null;
   const position = (id: string) => {
     const m = manifest[id];
@@ -494,6 +497,7 @@ function ExplodedGuides({ state }: { state: SceneState }) {
   );
 }
 function Forces({ state }: { state: SceneState }) {
+  const { t } = useLanguage();
   const s = sailing(
     state.wind,
     state.angle,
@@ -581,6 +585,7 @@ function Forces({ state }: { state: SceneState }) {
   );
 }
 function ContextRecovery() {
+  const { t } = useLanguage();
   const { gl, invalidate } = useThree();
   const [lost, setLost] = useState(false);
   useEffect(() => {
@@ -617,6 +622,17 @@ function ContextRecovery() {
       </div>
     </Html>
   ) : null;
+}
+function CanvasLanguage() {
+  const { t } = useLanguage();
+  const { gl } = useThree();
+  useEffect(() => {
+    gl.domElement.setAttribute(
+      "aria-label",
+      t(b("Interactive Cal 40 model", "可交互 Cal 40 模型")),
+    );
+  }, [gl, t]);
+  return null;
 }
 function Diagnostics() {
   const { gl, scene, camera } = useThree();
@@ -658,6 +674,7 @@ export function Scene({
   state: SceneState;
   onSelect: (id: string) => void;
 }) {
+  const { t } = useLanguage();
   return (
     <Canvas
       frameloop="demand"
@@ -671,12 +688,9 @@ export function Scene({
       }}
       onCreated={({ gl }) => {
         gl.setClearColor("#f1f3f0");
-        gl.domElement.setAttribute(
-          "aria-label",
-          t(b("Interactive Cal 40 model", "可交互 Cal 40 模型")),
-        );
       }}
     >
+      <CanvasLanguage />
       <ContextRecovery />
       <ambientLight intensity={1.8} />
       <directionalLight

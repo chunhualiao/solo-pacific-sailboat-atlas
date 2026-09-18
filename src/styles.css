@@ -1471,3 +1471,53 @@ h3 {
     inset: 142px 0 38px;
   }
 }
+
+/* Display preferences remain available even when every desktop panel is closed. */
+.display-controls {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 38px;
+  padding: 4px 18px;
+  background: #edf1e9;
+  border-bottom: 1px solid var(--line);
+  font-size: 11px;
+}
+.language-switch {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  cursor: pointer;
+}
+.panel-toggles {
+  display: flex;
+  gap: 8px;
+}
+.panel-toggles button {
+  border-radius: 4px;
+  padding: 5px 9px;
+}
+.panel-toggles button[aria-expanded="false"] {
+  background: #dce5d6;
+}
+.top-panels {
+  display: contents;
+}
+@media (min-width: 901px) {
+  .left-collapsed .sidebar,
+  .top-collapsed .topbar,
+  .top-collapsed .modebar,
+  .bottom-collapsed .explode-bar {
+    display: none;
+  }
+}
+@media (max-width: 900px) {
+  .panel-toggles {
+    display: none;
+  }
+  .language-switch {
+    min-height: 36px;
+  }
+}
